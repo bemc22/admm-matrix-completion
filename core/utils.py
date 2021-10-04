@@ -12,7 +12,8 @@ class Mask():
         self.mask = None
 
         if mode not in MODES:
-            assert False, 'mode mask not valid'
+            text = f'mask mode not valid, allowed modes: {MODES}'
+            assert False, text
             
         if mode == "random":
             self.mask = (np.random.random(size) < prcnt )*1. 
