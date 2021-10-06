@@ -35,5 +35,19 @@ class Mask():
         return mask
 
 
+def svd_th(A, th):
+    """Get an approximation of A with singular values grether than th.
+    """
+
+    u, s, vt = np.linalg.svd(A, full_matrices=False)
+    s[s < th] = 0
+
+    return np.dot(u*s, vt)
+
+
+def soft_th(A, th):
+
+    S = np.sign( A )*np.max( np.abs(A) - th, 0)
+    return S
 
     
