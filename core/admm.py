@@ -1,7 +1,10 @@
 import numpy as np
 import bm3d
+import matplotlib.pyplot as plt
 
 from core.utils import svd_th, soft_th
+from IPython.display import clear_output
+
 
 DENOSIDERS = {
 
@@ -36,8 +39,11 @@ class ADMM():
             x, l, s, z , u, v = self.step(y, x, l , s, z, u, v, rho, tau, lambd, mu, c)
 
             if sol is not None:
+                clear_output()
                 error = np.linalg.norm( sol - x, ord='fro')
                 print(f"ITERATION {i} - ERRROR {error}")
+                plt.imshow(x, cmap='gray')
+                plt.show()
 
         return x
     
