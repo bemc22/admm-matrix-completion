@@ -19,9 +19,12 @@ class ADMM():
         self.denoiser = DENOSIDERS[denoiser]
         
 
-    def restore(self, y, m, rho=1, tau=0.1, lambd=0.1, mu=0.1, iters=10, sol=None):
+    def restore(self, y, m, rho=0.1, tau=0.01, lambd=0.1, mu='auto', iters=10, sol=None):
 
         input_size = y.shape
+
+        if mu == 'auto':
+            mu = np.std(m)*rho
 
         # INITIALIZE VARIAIBLES
         x = y
