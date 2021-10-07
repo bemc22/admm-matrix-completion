@@ -2,9 +2,9 @@ import numpy as np
 import bm3d
 import matplotlib.pyplot as plt
 
-from core.utils import svd_th, soft_th
+from core.utils import svd_th, soft_th, psnr
 from IPython.display import clear_output
-
+from skimage.metrics import structural_similarity as ssim
 
 DENOSIDERS = {
 
@@ -43,8 +43,10 @@ class ADMM():
 
             if sol is not None:
                 clear_output()
-                error = np.linalg.norm( sol - x, ord='fro')
-                print(f"ITERATION {i} - ERRROR {error}")
+                error = round(np.linalg.norm( sol - x, ord='fro'),2)
+                value_psnr = round(psnr(sol, x),2)
+                value_ssim = round(ssim(sol, x, data_range=1),2)
+                print(f"iteration {i} | error {error} | psnr {value_psnr} | ssim {value_ssim}")
                 plt.imshow(x, cmap='gray')
                 plt.show()
 
@@ -56,8 +58,8 @@ class ADMM():
         l = svd_th(x + u - s, lambd/rho)
         s = soft_th( x + u - l, tau/rho)
         z = self.denoiser( x + v , mu/rho)
-        u = u + rho*(x - l - s)
-        v = v + rho*(x - z)
+        u = u + x - l - s
+        v = v + x - z
 
         return x, l , s , z , u , v
 
