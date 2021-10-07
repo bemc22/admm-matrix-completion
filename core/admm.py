@@ -3,11 +3,11 @@ import bm3d
 import matplotlib.pyplot as plt
 
 from core.utils import svd_th, soft_th, psnr
+import time
 from IPython.display import clear_output
 from skimage.metrics import structural_similarity as ssim
 
 DENOSIDERS = {
-
     "bm3d" : bm3d.bm3d
 }
 
@@ -39,6 +39,7 @@ class ADMM():
         c = 1 / (m + 2*rho)
 
         for i in range(iters):
+            t = time.time()
             x, l, s, z , u, v = self.step(y, x, l , s, z, u, v, rho, tau, lambd, mu, c)
 
             if sol is not None:
@@ -46,7 +47,7 @@ class ADMM():
                 error = round(np.linalg.norm( sol - x, ord='fro'),2)
                 value_psnr = round(psnr(sol, x),2)
                 value_ssim = round(ssim(sol, x, data_range=1),2)
-                print(f"iteration {i} | error {error} | psnr {value_psnr} | ssim {value_ssim}")
+                print(f"iteration {i} | error {error} | psnr {value_psnr} | ssim {value_ssim} | time {np.round(time.time() - t, 4)}")
                 plt.imshow(x, cmap='gray')
                 plt.show()
 
