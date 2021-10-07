@@ -19,7 +19,7 @@ class ADMM():
         self.denoiser = DENOSIDERS[denoiser]
         
 
-    def restore(self, y, m, rho=0.1, tau=0.01, lambd=0.1, mu='auto', iters=10, sol=None):
+    def restore(self, y, m, rho=0.1, tau=0.01, lambd=1e-4, mu='auto', iters=10, sol=None):
 
         input_size = y.shape
 
@@ -27,7 +27,7 @@ class ADMM():
             mu = np.std(m)*rho
 
         # INITIALIZE VARIAIBLES
-        x = y
+        x = self.denoiser(y, mu)*(1-m) + y
         l = np.random.random(input_size)
         s = np.random.random(input_size)
 
@@ -56,8 +56,8 @@ class ADMM():
         l = svd_th(x + u - s, lambd/rho)
         s = soft_th( x + u - l, tau/rho)
         z = self.denoiser( x + v , mu/rho)
-        u = u + x - l - s
-        v = v + x - z
+        u = u + rho*(x - l - s)
+        v = v + rho*(x - z)
 
         return x, l , s , z , u , v
 
