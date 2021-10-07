@@ -2,7 +2,7 @@ import numpy as np
 import bm3d
 import matplotlib.pyplot as plt
 
-from core.utils import svd_th, soft_th, psnr
+from core.utils import svd_th, svd_est, soft_th, psnr
 from IPython.display import clear_output
 from skimage.metrics import structural_similarity as ssim
 
@@ -19,12 +19,12 @@ class ADMM():
         self.denoiser = DENOSIDERS[denoiser]
         
 
-    def restore(self, y, m, rho=0.1, tau=0.01, lambd=1e-4, mu='auto', iters=10, sol=None):
+    def restore(self, y, m, rho=0.1, tau=0.01, lambd=5e-5, mu='auto', iters=10, sol=None):
 
         input_size = y.shape
 
         if mu == 'auto':
-            mu = np.std(m)*rho
+            mu = np.std(-m)*rho
 
         # INITIALIZE VARIAIBLES
         x = self.denoiser(y, mu)*(1-m) + y
@@ -33,14 +33,14 @@ class ADMM():
 
         # INITIALIZE AUXILIAR VARIABLES
         z = np.zeros(input_size)
-        u = np.zeros(input_size)
+        u = np.zeros(input_size)    
         v = np.zeros(input_size)
 
         c = 1 / (m + 2*rho)
 
         for i in range(iters):
             x, l, s, z , u, v = self.step(y, x, l , s, z, u, v, rho, tau, lambd, mu, c)
-
+            
             if sol is not None:
                 clear_output()
                 error = round(np.linalg.norm( sol - x, ord='fro'),2)

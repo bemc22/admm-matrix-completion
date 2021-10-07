@@ -42,6 +42,19 @@ def svd_th(A, th):
     s[s < th] = 0
     return np.dot(u*s, vt)
 
+def svd_est(A):
+    """Get an approximation of A with low-rank.
+
+    The new rank of the matrix is estimated with the method described in the 
+    paper "The optimal hard threshold for singular values is 4/sqrt(3)".
+    """
+    m, n = A.shape
+    u, s, vt = np.linalg.svd(A, full_matrices=False)
+    c = np.polyval([0.56, -0.95, 1.82, 1.43], m/n)
+    th = c*np.median(s)
+    s[s < th] = 0
+    return np.dot(u*s, vt)
+
 
 def soft_th(A, th):
 
