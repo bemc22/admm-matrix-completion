@@ -8,7 +8,11 @@ class Mask():
     
     def __init__(self, mode=None, prcnt=0.5, size=(512,512)):
 
-        MODES = ["random", 'text', "irregular"]
+        MODES = {
+        "random": "noise05.png", 
+        "text": "3.png",
+        "irregular" : "5.png",
+        }
         self.mask = None
 
         if mode not in MODES:
@@ -21,7 +25,7 @@ class Mask():
 
             mask_dir  = os.path.join("masks", mode)
             mask_path = os.listdir(mask_dir)
-            mask_path = random.choice(mask_path)
+            mask_path = MODES[mode]
             mask_path = os.path.join(mask_dir, mask_path)
             self.mask = self.preload_mask(mask_path)
 
