@@ -9,25 +9,21 @@ class Mask():
     def __init__(self, mode=None, prcnt=0.5, size=(512,512)):
 
         MODES = {
-        "random": "noise05.png", 
-        "text": "3.png",
-        "irregular" : "5.png",
+            "random": "noise05.png", 
+            "text": "9.png",
+            "irregular" : "3.png",
         }
         self.mask = None
 
         if mode not in MODES:
             text = f'mask mode not valid, allowed modes: {MODES}'
             assert False, text
-            
-        if mode == "random":
-            self.mask = (np.random.random(size) < prcnt )*1. 
-        else:
 
-            mask_dir  = os.path.join("masks", mode)
-            mask_path = os.listdir(mask_dir)
-            mask_path = MODES[mode]
-            mask_path = os.path.join(mask_dir, mask_path)
-            self.mask = self.preload_mask(mask_path)
+        mask_dir  = os.path.join("masks", mode)
+        mask_path = os.listdir(mask_dir)
+        mask_path = MODES[mode]
+        mask_path = os.path.join(mask_dir, mask_path)
+        self.mask = self.preload_mask(mask_path)
 
     def __call__(self, img):
         corrupted = self.mask*img 
