@@ -19,7 +19,7 @@ class ADMM():
         self.denoiser = DENOSIDERS[denoiser]
         
 
-    def restore(self, y, m, rho=0.1, tau=0.01, lambd=5e-5, mu='auto', iters=10, sol=None):
+    def restore(self, y, m, rho=0.2, tau=0.01, lambd=1e-4, mu='auto', iters=10, sol=None):
 
         input_size = y.shape
 
@@ -48,7 +48,11 @@ class ADMM():
                 value_psnr = round(psnr(sol, x),2)
                 value_ssim = round(ssim(sol, x, data_range=1),2)
                 print(f"iteration {i} | error {error} | psnr {value_psnr} | ssim {value_ssim} | time {np.round(time.time() - t, 4)}")
-                plt.imshow(x, cmap='gray')
+                
+                fig , axs = plt.subplots(1, 2)
+                
+                axs[0].imshow(x, cmap='gray')
+                axs[1].imshow(np.abs(sol - x))
                 plt.show()
 
         return x
