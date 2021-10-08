@@ -9,9 +9,9 @@ class Mask():
     def __init__(self, mode=None, prcnt=0.5, size=(512,512)):
 
         MODES = {
-        "random": "noise05.png", 
-        "text": "3.png",
-        "irregular" : "5.png",
+            "random": "noise05.png", 
+            "text": "9.png",
+            "irregular" : "3.png",
         }
         self.mask = None
 
