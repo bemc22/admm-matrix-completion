@@ -18,16 +18,12 @@ class Mask():
         if mode not in MODES:
             text = f'mask mode not valid, allowed modes: {MODES}'
             assert False, text
-            
-        if mode == "random":
-            self.mask = (np.random.random(size) < prcnt )*1. 
-        else:
 
-            mask_dir  = os.path.join("masks", mode)
-            mask_path = os.listdir(mask_dir)
-            mask_path = MODES[mode]
-            mask_path = os.path.join(mask_dir, mask_path)
-            self.mask = self.preload_mask(mask_path)
+        mask_dir  = os.path.join("masks", mode)
+        mask_path = os.listdir(mask_dir)
+        mask_path = MODES[mode]
+        mask_path = os.path.join(mask_dir, mask_path)
+        self.mask = self.preload_mask(mask_path)
 
     def __call__(self, img):
         corrupted = self.mask*img 
