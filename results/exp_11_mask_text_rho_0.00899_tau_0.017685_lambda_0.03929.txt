@@ -1,0 +1,11 @@
+#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#
+      Model configuration and hyperparameters      
+#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#=#
+mask_text	rho_0.008990030906808322	tau_0.017685183269674377	lambda_0.03929023438006951
+frob=43.34	psnr=21.45	ssim=0.77
+frob=42.03	psnr=21.71	ssim=0.77
+frob=50.07	psnr=20.19	ssim=0.75
+frob=41.85	psnr=21.75	ssim=0.78
+frob=43.85	psnr=21.35	ssim=0.79
+Promedio:
+frob=44.227999999999994	psnr=21.29	ssim=0.772
