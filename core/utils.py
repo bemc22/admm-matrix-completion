@@ -68,7 +68,7 @@ def psnr(y_true, y_pred):
     y_pred = y_pred.flatten()
 
     mse = np.mean( np.square( y_true - y_pred) )
-    value = 10*np.log10(  1 / mse )        
+    value = 10*np.log10(  1**2 / mse )        
     return value
 
     
