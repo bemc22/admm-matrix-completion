@@ -1,1 +1,1 @@
-# ADMM approach for matrix completion inverse problem
+# Matrix Completion via PnP-ADMM with Low Rank Regularizer
