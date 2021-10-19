@@ -53,7 +53,7 @@ class ADMM():
                 error = round(np.linalg.norm( sol - x, ord='fro'),2)
                 value_psnr = round(psnr(sol, x),2)
                 value_ssim = round(ssim(sol, x, data_range=1),2)
-                # print(f"iteration {i + 1} | error {error} | psnr {value_psnr} | ssim {value_ssim} | time {np.round(time.time() - t, 4)}")
+                print(f"iteration {i + 1} | error {error} | psnr {value_psnr} | ssim {value_ssim} | time {np.round(time.time() - t, 4)}")
                 # plt.imshow(x, cmap='gray')
                 # plt.show()
 
@@ -68,7 +68,8 @@ class ADMM():
         # best performance
         pos = np.argmax(psnr_list)
 
-        return x, dict(frob=frob_list[pos], psnr=psnr_list[pos], ssim=ssim_list[pos])
+        # return x, dict(frob=frob_list[pos], psnr=psnr_list[pos], ssim=ssim_list[pos])
+        return x, dict(frob=frob_list, psnr=psnr_list, ssim=ssim_list)
     
     def step(self, y, x, l , s, z, u , v, rho, tau, lambd, mu, c):
 
