@@ -58,7 +58,7 @@ def svd_est(A):
 
 def soft_th(A, th):
 
-    S = np.sign( A )*np.max( np.abs(A) - th, 0)
+    S = np.sign( A )*np.maximum( np.abs(A) - th, 0)
     return S
 
 
